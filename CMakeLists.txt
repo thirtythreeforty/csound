@@ -1091,6 +1091,11 @@ if(APPLE)
     )
 endif()
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(${CSOUNDLIB} PRIVATE
+        -Wno-implicit-const-int-float-conversion)
+endif()
+
 
 # Utility function to make plugins. All plugin targets should use this as it
 # sets up output directory set in top-level CmakeLists.txt
@@ -1114,6 +1119,11 @@ function(make_plugin libname srcs)
         target_link_libraries(${libname} ${ARGV${i}})
         math(EXPR i "${i}+1")
     endwhile()
+
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        target_compile_options(${libname} PRIVATE
+            -Wno-implicit-const-int-float-conversion)
+    endif()
 
     set_target_properties(${libname} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${BUILD_PLUGINS_DIR}
