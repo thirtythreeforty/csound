@@ -1076,6 +1076,10 @@ if(APPLE)
 endif()
 
 add_library(${CSOUNDLIB} SHARED ${libcsound_SRCS})
+target_include_directories(${CSOUNDLIB} INTERFACE
+    ${CMAKE_CURRENT_BINARY_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_target_properties(${CSOUNDLIB} PROPERTIES
     SOVERSION ${APIVERSION})
 
